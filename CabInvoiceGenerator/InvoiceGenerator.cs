@@ -26,13 +26,23 @@ namespace CabInvoiceGenerator
         {
             if (ride.time < 1)
             {
-                throw new CustomException(CustomException.Exceptions.TimeSmallerThaOneMin, "Time should be greater than One Minutes");
+                throw new CustomException(CustomException.Exceptions.TIME_SMALLER_THAN_ONE_MIN, "Time should be greater than One Minutes");
             }
             else if (ride.distance < 5)
             {
-                throw new CustomException(CustomException.Exceptions.DistanceSmallerThanFive, "Distance should be greater than or equal to Five Km");
+                throw new CustomException(CustomException.Exceptions.DISTANCE_SMALLER_THAN_FIVE, "Distance should be greater than or equal to Five Km");
             }
             return Math.Max(minimumFare, ride.distance * rideChargePerKm + ride.time * pricePrMinute);
+        }
+        public int CalculateFareForMultipleRide(List<Ride> rides)
+        {
+            foreach (var ride in rides)
+            {
+                totalFare += CalculateFaresForSingleRide(ride);
+                numberOfRides++;
+            }
+            averageCostOfRide = totalFare / numberOfRides;
+            return totalFare;
         }
     }
 }

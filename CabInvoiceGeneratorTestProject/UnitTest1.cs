@@ -43,5 +43,51 @@ namespace CabInvoiceGeneratorTestProject
                 Assert.AreEqual("Time should be greater than One Minutes", ex.Message);
             }
         }
+        [TestMethod]
+        public void GiveDistanceAndTIme_CalcualteFareMultipleRide()
+        {
+            Ride rideOne = new Ride(6, 4);
+            Ride rideTwo = new Ride(5, 6);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(rideOne);
+            rides.Add(rideTwo);
+            Assert.AreEqual(120, invoice.CalculateFareForMultipleRide(rides));
+        }
+        [TestMethod]
+        public void GiveInvalidDistance_CalcualteFareMultipleRide()
+        {
+            Ride rideOne = new Ride(4, 4);
+            Ride rideTwo = new Ride(3, 6);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(rideOne);
+            rides.Add(rideTwo);
+            int calFare;
+            try
+            {
+                calFare = invoice.CalculateFareForMultipleRide(rides);
+            }
+            catch (CustomException exception)
+            {
+                Assert.AreEqual("Distance should be greater than or equal to Five Km", exception.Message);
+            }
+        }
+        [TestMethod]
+        public void GiveInvalidTime_CalcualteFareMultipleRide()
+        {
+            Ride rideOne = new Ride(7, 0);
+            Ride rideTwo = new Ride(8, 0);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(rideOne);
+            rides.Add(rideTwo);
+            int calFare;
+            try
+            {
+                calFare = invoice.CalculateFareForMultipleRide(rides);
+            }
+            catch (CustomException exception)
+            {
+                Assert.AreEqual("Time should be greater than One Minutes", exception.Message);
+            }
+        }
     }
 }

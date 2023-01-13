@@ -11,9 +11,9 @@ namespace CabInvoiceGenerator
         public Exceptions type;
         public enum Exceptions
         {
-            TimeSmallerThaOneMin,
-            DistanceSmallerThanFive,
-            InvalidUserId
+            TIME_SMALLER_THAN_ONE_MIN,
+            DISTANCE_SMALLER_THAN_FIVE,
+            INVLID_USER_ID
         }
         public CustomException(Exceptions type, string message) : base(message)
         {
