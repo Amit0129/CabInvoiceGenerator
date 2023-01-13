@@ -1,11 +1,10 @@
-﻿using CabInvoiceGenerator;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CabInvoiceGeneratorTestProject
+namespace CabInvoiceGenerator
 {
     public class RideRepository
     {
@@ -28,7 +27,7 @@ namespace CabInvoiceGeneratorTestProject
         {
             if (rideRepository.ContainsKey(userID))
                 return rideRepository[userID];
-            else throw new CustomException(CustomException.Exceptions.INVLID_USER_ID, "Invalid User ID");
+            else throw new CustomException(CustomException.ExceptionType.INVLID_USER_ID, "Invalid User ID");
         }
     }
 }
