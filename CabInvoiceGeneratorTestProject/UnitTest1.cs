@@ -7,6 +7,7 @@ namespace CabInvoiceGeneratorTestProject
     public class UnitTest1
     {
         InvoiceGenerator invoice = new InvoiceGenerator();
+        RideRepository rideRepository = new RideRepository();
         [TestMethod]
         [DataRow(6,4)]
         public void GiveDistanceAndTIme_CalcualteFare(int distance, int time)
@@ -115,6 +116,36 @@ namespace CabInvoiceGeneratorTestProject
             rides.Add(rideThree);
             invoice.CalculateFareForMultipleRide(rides);
             Assert.AreEqual(3, invoice.numberOfRides);
+        }
+        [TestMethod]
+        public void GivenValidUserIdGenerateCabInvoice()
+        {
+            Ride rideOne = new Ride(5, 7);
+            Ride rideTwo = new Ride(6, 10);
+            Ride rideThree = new Ride(6, 23);
+            rideRepository.AddRide("Amit", rideOne);
+            rideRepository.AddRide("Amit", rideTwo);
+            rideRepository.AddRide("Amit", rideThree);
+            //Fare for multiple ride but give list of rides for a perticular rider(User) and then pass to Calculate fare
+            Assert.AreEqual(210, invoice.CalculateFareForMultipleRide(rideRepository.GetListOfRides("Amit")));
+        }
+        [TestMethod]
+        public void GivenInValidUserIdGenerateCabInvoice()
+        {
+            try
+            {
+                Ride rideOne = new Ride(5, 7);
+                Ride rideTwo = new Ride(6, 10);
+                Ride rideThree = new Ride(6, 23);
+                rideRepository.AddRide("Amit", rideOne);
+                rideRepository.AddRide("Amit", rideTwo);
+                rideRepository.AddRide("Amit", rideThree);
+            }
+            catch (CustomException)
+            {
+                //Fare for multiple ride but give list of rides for a perticular rider(User) and then pass to Calculate fare
+                Assert.AreEqual("Invalid User ID", invoice.CalculateFareForMultipleRide(rideRepository.GetListOfRides("Manit")));
+            }
         }
     }
 }
