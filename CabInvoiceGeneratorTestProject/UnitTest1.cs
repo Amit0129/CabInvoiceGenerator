@@ -89,5 +89,32 @@ namespace CabInvoiceGeneratorTestProject
                 Assert.AreEqual("Time should be greater than One Minutes", exception.Message);
             }
         }
+        [TestMethod]
+        public void GiveDistanceAndTime_CalcualteAverage_FareFor_MultipleRide()
+        {
+            Ride rideOne = new Ride(6, 4);
+            Ride rideTwo = new Ride(5, 6);
+            Ride rideThree = new Ride(5, 6);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(rideOne);
+            rides.Add(rideTwo);
+            rides.Add(rideThree);
+            invoice.CalculateFareForMultipleRide(rides);
+            int avergareFair = invoice.averageCostOfRide;
+            Assert.AreEqual(58, avergareFair);
+        }
+        [TestMethod]
+        public void GiveDistanceAndTime_CalcualteNumberOfRidesFor_MultipleRide()
+        {
+            Ride rideOne = new Ride(6, 4);
+            Ride rideTwo = new Ride(5, 6);
+            Ride rideThree = new Ride(5, 6);
+            List<Ride> rides = new List<Ride>();
+            rides.Add(rideOne);
+            rides.Add(rideTwo);
+            rides.Add(rideThree);
+            invoice.CalculateFareForMultipleRide(rides);
+            Assert.AreEqual(3, invoice.numberOfRides);
+        }
     }
 }
